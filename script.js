@@ -80,7 +80,7 @@ function getAnswer (param){
 let trueAnswer = 0;
 console.log(mainContainer.classList)
 const goNext = () => {
-    let isAnswered = false;
+    
     if (currentPosition >= questions.length){
         mainContainer.classList.replace("questions", "greetings");
         mainContainer.innerHTML = `<div class="greetingsDiv">
@@ -95,41 +95,54 @@ const goNext = () => {
         resultButton.addEventListener("click", resultFunc)
         return
     }
+
+
+    const question = questions[currentPosition];
     mainContainer.classList.remove("mainFirstCont");
     mainContainer.innerHTML = `<div class="questionName"><span class="questionNameText">${questions[currentPosition].number}. ${questions[currentPosition].name}</span></div>
                 <div class="questionOptDiv">
-                <button class="questionOption" id="optionButton" name="1"><span class="qustionText">${questions[currentPosition].options[0]}</span></button>
-                <button class="questionOption" id="optionButton" name="2"><span class="qustionText">${questions[currentPosition].options[1]}</span></button>
-                <button class="questionOption" id="optionButton" name="3"><span class="qustionText">${questions[currentPosition].options[2]}</span></button>
+                <button class="questionOption" name="1"><span class="qustionText">${questions[currentPosition].options[0]}</span></button>
+                <button class="questionOption" name="2"><span class="qustionText">${questions[currentPosition].options[1]}</span></button>
+                <button class="questionOption" name="3"><span class="qustionText">${questions[currentPosition].options[2]}</span></button>
                 </div>`;
     
     actionButton.innerText = "Далі";
-    //console.log(currentPosition)
-
+    
+    //ОБРАБОТЧИК КНОПОК
+    let isAnswered = false;
     optionButtonAct = document.querySelectorAll(".questionOption");
     optionButtonAct.forEach(button=>{
         button.addEventListener("click", (event)=>{
             if (isAnswered){return};
-            //currentPosition -=1;
-            const selectedAnswer = parseInt(event.target.getAttribute("name"))
-            if(selectedAnswer === questions[currentPosition].id){
-                trueAnswer++
-                
+            isAnswered = true;
+
+            //Получение name
+            const nameAttr = event.target.getAttribute("name");
+            console.log("Атрибут name:", nameAttr);
+            const selectedAnswer = parseInt(nameAttr, 10);
+            console.log(`Выбранный ответ: ${selectedAnswer}, Правильный ответ: ${question.id}`);
+
+            //Проверка правильности ответа
+            if(selectedAnswer === question.id){
+                trueAnswer++;
+                console.log("Ответ правильный!");
+            } else{
+                console.log("Ответ неправильный!");
             };
             
-            //console.log(questions[currentPosition].id);
+            //Визуальное обновление
             button.classList.replace("questionOption", "selected");
-            isAnswered = true;
             optionButtonAct.forEach(btn=>btn.disabled = true)
-            currentPosition ++;
+            
         })
     }
     )
     
     mainContainer.classList.add("mainCont", "questions");
     //currentPosition ++;
-    console.log(currentPosition);
-    console.log(trueAnswer);
+    console.log(`Текущий вопрос: ${currentPosition + 1}`);
+    console.log(`Общее количество правильных ответов: ${trueAnswer}`);
+    currentPosition ++;
     
     
 };
@@ -150,6 +163,9 @@ const resultFunc = () => {
                     <div class="result"><p class="resultP">${questions[9].number}. ${questions[9].name} <b>${questions[9].options[questions[9].id-1]}</b></p></div>
                 </div>`
 };
+
+
+
 
 
 
