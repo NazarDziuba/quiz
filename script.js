@@ -117,7 +117,7 @@ const goNext = () => {
             isAnswered = true;
 
             //Получение name
-            const nameAttr = event.target.getAttribute("name");
+            const nameAttr = event?.target.getAttribute("name");
             console.log("Атрибут name:", nameAttr);
             const selectedAnswer = parseInt(nameAttr, 10);
             console.log(`Выбранный ответ: ${selectedAnswer}, Правильный ответ: ${question.id}`);
