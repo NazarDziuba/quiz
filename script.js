@@ -110,14 +110,20 @@ const goNext = () => {
     //ОБРАБОТЧИК КНОПОК
     let isAnswered = false;
     optionButtonAct = document.querySelectorAll(".questionOption");
-    optionButtonAct.forEach(button=>{
-        button.addEventListener("click", (event)=>{
+    optionButtonAct.forEach(btn=>{
+        btn.addEventListener("click", (event)=>{
             if (isAnswered){return};
             isAnswered = true;
+            
+            console.log(btn);
 
+            
+            // Используем closest, чтобы найти ближайшую кнопку
+            const targetButton = event.target.closest(".questionOption");
+            if (!targetButton) return;
             //Получение name
-            const dataId = event?.target.dataset.id;
-            const eventTest = event.target;
+            const dataId = targetButton.dataset.id;
+            const eventTest = targetButton;
             console.log("Атрибут data:", dataId);
             console.log("Тестовый event:", eventTest);
             console.log("Тип данных dataId:", typeof dataId)
@@ -134,7 +140,7 @@ const goNext = () => {
             };
             
             //Визуальное обновление
-            button.classList.replace("questionOption", "selected");
+            btn.classList.replace("questionOption", "selected");
             optionButtonAct.forEach(btn=>btn.disabled = true)
             
         })
