@@ -101,11 +101,10 @@ const goNext = () => {
     mainContainer.classList.remove("mainFirstCont");
     mainContainer.innerHTML = `<div class="questionName"><span class="questionNameText">${questions[currentPosition].number}. ${questions[currentPosition].name}</span></div>
                 <div class="questionOptDiv">
-                <button class="questionOption" name="1"><span class="qustionText">${questions[currentPosition].options[0]}</span></button>
-                <button class="questionOption" name="2"><span class="qustionText">${questions[currentPosition].options[1]}</span></button>
-                <button class="questionOption" name="3"><span class="qustionText">${questions[currentPosition].options[2]}</span></button>
+                <button class="questionOption" data-id="1"><span class="qustionText">${questions[currentPosition].options[0]}</span></button>
+                <button class="questionOption" data-id="2"><span class="qustionText">${questions[currentPosition].options[1]}</span></button>
+                <button class="questionOption" data-id="3"><span class="qustionText">${questions[currentPosition].options[2]}</span></button>
                 </div>`;
-    
     actionButton.innerText = "Далі";
     
     //ОБРАБОТЧИК КНОПОК
@@ -117,10 +116,14 @@ const goNext = () => {
             isAnswered = true;
 
             //Получение name
-            const nameAttr = event?.target.getAttribute("name");
-            console.log("Атрибут name:", nameAttr);
-            const selectedAnswer = parseInt(nameAttr, 10);
+            const dataId = event?.target.dataset.id;
+            const eventTest = event.target;
+            console.log("Атрибут data:", dataId);
+            console.log("Тестовый event:", eventTest);
+            console.log("Тип данных dataId:", typeof dataId)
+            const selectedAnswer = parseInt(dataId, 10);
             console.log(`Выбранный ответ: ${selectedAnswer}, Правильный ответ: ${question.id}`);
+            console.log("Тип данных selectedAnswer:", typeof selectedAnswer)
 
             //Проверка правильности ответа
             if(selectedAnswer === question.id){
